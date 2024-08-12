@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <h3>Categories</h3>
+
+  <div class="container">
+    <div class="d-flex justify-content-end">
+      <button (click)="toggleAddCategoryMode()" class="btn btn-primary mb-2 " >Add Category/Subcategory</button>
+   </div>
+      <div *ngIf="!isAddCategoryMode">
+        <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+          <div class="mb-3">
+          <label for="name" class="form-label ">Category Name:</label>
+          <input id="name" class="form-control w-50" formControlName="name" name="name" type="text" />
+          <div *ngIf="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid">
+            <div class="val-error" *ngIf="categoryForm.get('name')?.errors?.['required']">
+               Name is Required </div>
+          </div>
+
+        </div>
+
+          <div  class="mb-3">
+            <label class="form-label" for="discount" class="form-label">Discount:</label>
+            <input class="form-control w-50" id="discount"
+            formControlName="discount" type="number" autocomplete="off">
+
+          </div>
+
+          <div class="mb-3">
+          <label class="form-label" for="parent_id">Parent Category:</label>
+          <select id="parent_id" class="form-control w-50" formControlName="parent_id">
+            <option [value]="null">None</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+           </div>
+
+
+          <button class="btn btn-primary m-2"  type="submit">Save</button>
+          <button class="btn btn-danger m-2" type="button"  (click)="toggleAddCategoryMode()">Cancel</button>
+           <div class="val-error">
+             {{ errorMessagesFromApi }}
+           </div>
+
+        </form>
+      </div>
+
+
+  </div>
+<hr>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Discount</th>
+        <th>Category </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.discount ? category.discount+'%' : 'No Discount'}}</td>
+        <td> {{ category.parent_name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

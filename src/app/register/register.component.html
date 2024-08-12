@@ -1,0 +1,37 @@
+<div class="container d-flex justify-content-center align-items-center ">
+  <div class="card p-4" style="width: 100%; max-width: 400px;">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+
+      <h2 class="text-center mb-4">Register</h2>
+      <div class="form-group">
+        <label for="name">Username</label>
+        <input type="text" class="form-control" formControlName="name" id="name" name="name" required>
+        <div *ngIf="registrationForm.get('name')?.touched && registrationForm.get('name')?.invalid">
+          <div class="val-error" *ngIf="registrationForm.get('name')?.errors?.['required']"> Name is Required </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" formControlName="email" id="email" name="email" required>
+        <div *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
+          <div class="val-error" *ngIf="registrationForm.get('email')?.errors?.['required']"> Email is Required </div>
+          <div class="val-error" *ngIf="registrationForm.get('email')?.errors?.['email']"> Invalid Email Adrees </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="password" name="password" required>
+        <div *ngIf="registrationForm.get('password')?.touched  && registrationForm.get('password')?.invalid">
+          <div class="val-error" *ngIf="registrationForm.get('password')?.errors?.['required']"> Password is Required </div>
+           <div class="val-error" *ngIf="registrationForm.get('password')?.errors?.['minlength']"> Password should be more than 6 characters  </div>
+        </div>
+      </div>
+      <div class="val-error" *ngIf="errorMessage">
+
+      </div>
+
+
+      <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+  <h5>Create Item</h5>
+  <form [formGroup]="itemForm" (ngSubmit)="addItem()">
+    <div class="form-group mb-3">
+      <label for="name">Name</label>
+      <input id="name" class="form-control w-50" formControlName="name" type="text" />
+      <div *ngIf="itemForm.get('name')?.touched && itemForm.get('name')?.invalid">
+        <div class="val-error" *ngIf="itemForm.get('name')?.errors?.['required']">Name is required.</div>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="price">Price</label>
+      <input id="price" class="form-control w-50" formControlName="price" type="number" />
+      <div *ngIf="itemForm.get('price')?.touched && itemForm.get('price')?.invalid">
+        <div class="val-error" *ngIf="itemForm.get('price')?.errors?.['required']">Price is required.</div>
+        <div class="val-error" *ngIf="itemForm.get('price')?.errors?.['min']">Price must be a positive number.</div>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="discount">Discount</label>
+      <input id="discount" class="form-control w-50" formControlName="discount" type="text" />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="category_id">Category</label>
+      <select id="category_id" class="form-control w-50" formControlName="category_id">
+        <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.name }}</option>
+      </select>
+      <div *ngIf="itemForm.get('category_id')?.touched && itemForm.get('category_id')?.invalid">
+        <div class="val-error" *ngIf="itemForm.get('category_id')?.errors?.['required']">Category is required.</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="itemForm.invalid">Add Item</button>
+  </form>
+       <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let item of items">
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.discount }}</td>
+        <td>{{ item.category_name }}</td>
+      </tr>
+    </tbody>
+    <div class="val-error" *ngIf="noItemsMessage"> {{  noItemsMessage }}</div>
+  </table><div *ngIf="errorMessages">{{ errorMessages }} </div>
+</div>
+
+
+

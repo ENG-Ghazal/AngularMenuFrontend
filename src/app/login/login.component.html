@@ -1,0 +1,29 @@
+<div class="container d-flex justify-content-center align-items-center ">
+  <div class="card p-4" style="width: 100%; max-width: 400px;">
+    <h2 class="text-center mb-4">Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input type="email" class="form-control" formControlName="email" id="email" aria-describedby="emailHelp">
+    <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+      <div class="val-error" *ngIf="loginForm.get('email')?.errors?.['required']"> Email is Required </div>
+      <div class="val-error" *ngIf="loginForm.get('email')?.errors?.['email']"> Invalid Email Adrees </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" formControlName="password" id="password">
+    <div *ngIf="loginForm.get('password')?.touched  && loginForm.get('password')?.invalid">
+      <div class="val-error" *ngIf="loginForm.get('password')?.errors?.['required']"> Password is Required </div>
+       <div class="val-error" *ngIf="loginForm.get('password')?.errors?.['minlength']"> Password should be more than 6 characters  </div>
+    </div>
+  </div>
+  <div *ngIf="!!errorMessage" class="val-error">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
